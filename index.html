@@ -1,1 +1,278 @@
-   <h1>Hola acá andamos</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cachorx</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b0b0b;
+      --paper: #ffffff;
+      --yellow: #ffe9a8;
+      --sky: #a9ddf5;
+      --teal-1: #c4f0e9;
+      --teal-2: #7fd1c7;
+      --teal-3: #3fa9a3;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--ink); }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .display {
+      font-family: Anton, Impact, "Arial Black", sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    /* ---------- header ---------- */
+    header { padding: 56px 24px 32px; max-width: 760px; margin: 0 auto; }
+    h1 { font-size: clamp(56px, 14vw, 120px); margin: 0; color: var(--paper); }
+    h1 span { color: var(--sky); }
+    .subtitle { font-size: clamp(22px, 5vw, 32px); margin: 12px 0 24px; color: var(--yellow); }
+    header p { margin: 0; color: #d6d6d6; max-width: 560px; }
+
+    /* ---------- scroller ---------- */
+    .stage { position: relative; margin: 24px 0 0; }
+    .scroller {
+      position: relative;
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      padding: 16px 0;
+      scrollbar-width: none;
+    }
+    .scroller::-webkit-scrollbar { display: none; }
+    .card {
+      flex: 0 0 auto;
+      width: min(78vw, 320px);
+      height: min(100vw, 400px);
+      padding: 0;
+      border: 0;
+      background: none;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      color: var(--ink);
+      text-align: left;
+      transition: opacity 0.15s linear, transform 0.15s linear;
+    }
+    .card .ph, .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card .ph {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 12px 16px;
+      font-size: 96px;
+    }
+    .card .label {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 12px 16px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 26px;
+    }
+    .card:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--yellow);
+      color: var(--ink);
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .arrow:hover { background: var(--sky); }
+    .arrow.prev { left: 12px; }
+    .arrow.next { right: 12px; }
+
+    .hint {
+      text-align: center;
+      margin: 12px 0 0;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal-2);
+    }
+
+    /* ---------- footer ---------- */
+    footer { padding: 56px 24px 72px; max-width: 760px; margin: 0 auto; }
+    footer .display { font-size: 28px; color: var(--teal-2); margin-bottom: 8px; }
+    footer a { color: var(--paper); text-decoration-color: var(--sky); text-underline-offset: 4px; }
+    footer a:hover { color: var(--sky); }
+
+    /* ---------- popup ---------- */
+    dialog {
+      width: min(92vw, 560px);
+      max-height: 90vh;
+      padding: 0;
+      border: 0;
+      background: var(--paper);
+      color: var(--ink);
+      overflow: auto;
+    }
+    dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
+    .dimg { height: 240px; }
+    .dimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .dbody { padding: 24px; }
+    .dbody h2 { font-size: 40px; margin: 0 0 4px; }
+    .dbody .meta { margin: 0 0 16px; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: #555; }
+    .dbody p { margin: 0 0 12px; }
+    .close {
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 40px; height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 22px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="display">Cacho<span>rx</span></h1>
+    <p class="subtitle display">Photographer &amp; visual artist</p>
+    <p>A short paragraph about him goes here: who he is, where he's based, and what kind of work he makes. Two or three sentences is plenty.</p>
+  </header>
+
+  <section class="stage">
+    <button class="arrow prev" id="prev" aria-label="Previous project">&larr;</button>
+    <button class="arrow next" id="next" aria-label="Next project">&rarr;</button>
+    <div class="scroller" id="scroller"></div>
+    <p class="hint">Click for description</p>
+  </section>
+
+  <footer>
+    <div class="display">Contact</div>
+    <a href="mailto:hello@example.com">hello@example.com</a><br>
+    <a href="https://instagram.com/" target="_blank" rel="noopener">@instagram</a>
+  </footer>
+
+  <dialog id="dialog">
+    <button class="close" id="close" aria-label="Close">&times;</button>
+    <div class="dimg" id="dimg"></div>
+    <div class="dbody">
+      <h2 class="display" id="dtitle"></h2>
+      <p class="meta" id="dmeta"></p>
+      <p id="ddesc"></p>
+    </div>
+  </dialog>
+
+  <script>
+    // ---- Edit this list to change the projects. ----
+    // To use a real image, add img: "filename.jpg" to a project.
+    // Without img, a colored placeholder tile is shown.
+    const projects = [
+      { title: "Project One",   year: "2026", color: "#a9ddf5", desc: "Sample description. Say what the project was, what he made, and anything he's proud of. A few sentences works well here." },
+      { title: "Project Two",   year: "2026", color: "#ffe9a8", desc: "Sample description for the second project. Swap in real text later." },
+      { title: "Project Three", year: "2025", color: "#7fd1c7", desc: "Sample description for the third project. Swap in real text later." },
+      { title: "Project Four",  year: "2025", color: "#c4f0e9", desc: "Sample description for the fourth project. Swap in real text later." },
+      { title: "Project Five",  year: "2025", color: "#3fa9a3", desc: "Sample description for the fifth project. Swap in real text later." },
+      { title: "Project Six",   year: "2024", color: "#d9f0fb", desc: "Sample description for the sixth project. Swap in real text later." }
+    ];
+
+    const scroller = document.getElementById('scroller');
+    const dialog = document.getElementById('dialog');
+    const N = projects.length;
+    const cards = [];
+
+    function visual(p, i) {
+      if (p.img) return `<img src="${p.img}" alt="${p.title}">`;
+      return `<div class="ph display" style="background:${p.color}">${String(i + 1).padStart(2, '0')}</div>`;
+    }
+
+    // three copies of the list so it can loop in both directions
+    for (let set = 0; set < 3; set++) {
+      projects.forEach((p, i) => {
+        const card = document.createElement('button');
+        card.className = 'card';
+        card.innerHTML = visual(p, i) + `<div class="label display">${p.title}</div>`;
+        if (set !== 1) { card.setAttribute('aria-hidden', 'true'); card.tabIndex = -1; }
+        card.addEventListener('click', () => openProject(p, i));
+        scroller.appendChild(card);
+        cards.push(card);
+      });
+    }
+
+    function setWidth() { return cards[N].offsetLeft - cards[0].offsetLeft; }
+
+    function centerMiddleSet() {
+      const c = cards[N];
+      scroller.scrollLeft = c.offsetLeft - (scroller.clientWidth - c.offsetWidth) / 2;
+    }
+
+    // fade + shrink cards the farther they are from the center
+    function fade() {
+      const mid = scroller.scrollLeft + scroller.clientWidth / 2;
+      const reach = scroller.clientWidth * 0.6;
+      cards.forEach(card => {
+        const d = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid) / reach;
+        const o = Math.max(0.12, 1 - d);
+        card.style.opacity = o;
+        card.style.transform = `scale(${0.9 + 0.1 * o})`;
+      });
+    }
+
+    // quietly jump by one full set so the loop never ends
+    function wrap() {
+      const sw = setWidth();
+      if (scroller.scrollLeft < sw * 0.5) scroller.scrollLeft += sw;
+      else if (scroller.scrollLeft > sw * 1.5) scroller.scrollLeft -= sw;
+    }
+
+    let timer;
+    scroller.addEventListener('scroll', () => {
+      requestAnimationFrame(fade);
+      clearTimeout(timer);
+      timer = setTimeout(wrap, 120);
+    });
+
+    function step(dir) {
+      const c = cards[N];
+      scroller.scrollBy({ left: dir * (c.offsetWidth + 24), behavior: 'smooth' });
+    }
+    document.getElementById('next').addEventListener('click', () => step(1));
+    document.getElementById('prev').addEventListener('click', () => step(-1));
+
+    // ---- popup ----
+    function openProject(p, i) {
+      document.getElementById('dimg').innerHTML = visual(p, i).replace('class="ph display"', 'class="ph display" style="height:100%;font-size:120px;"');
+      document.getElementById('dtitle').textContent = p.title;
+      document.getElementById('dmeta').textContent = p.year;
+      document.getElementById('ddesc').textContent = p.desc;
+      dialog.showModal();
+    }
+    document.getElementById('close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+
+    window.addEventListener('load', () => { centerMiddleSet(); fade(); });
+    window.addEventListener('resize', () => { centerMiddleSet(); fade(); });
+  </script>
+</body>
+</html>
